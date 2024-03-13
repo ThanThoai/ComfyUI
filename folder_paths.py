@@ -89,13 +89,13 @@ for k, v in folder_names_and_paths.items():
 data_dir = os.getenv("DATA_DIR", os.path.dirname(os.path.realpath(__file__)))
 
 output_directory = os.path.join(data_dir, "output")
-os.makedirs(output_directory)
+os.makedirs(output_directory, exist_ok=True)
 temp_directory = os.path.join(data_dir, "temp")
-os.makedirs(temp_directory)
+os.makedirs(temp_directory, exist_ok=True)
 input_directory = os.path.join(data_dir, "input")
-os.makedirs(input_directory)
+os.makedirs(input_directory, exist_ok=True)
 user_directory = os.path.join(data_dir, "user")
-os.makedirs(user_directory)
+os.makedirs(user_directory, exist_ok=True)
 
 filename_list_cache = {}
 
