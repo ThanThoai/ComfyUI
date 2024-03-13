@@ -84,7 +84,7 @@ folder_names_and_paths["classifiers"] = (
 
 
 for k, v in folder_names_and_paths.items():
-    os.makedirs(v[0], mode=0o777, exist_ok=True)
+    os.makedirs(v[0][0], mode=0o777, exist_ok=True)
 
 data_dir = os.getenv("DATA_DIR", os.path.dirname(os.path.realpath(__file__)))
 
