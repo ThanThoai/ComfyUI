@@ -1,5 +1,6 @@
 import os
 import time
+import logging
 
 
 supported_pt_extensions = set([".ckpt", ".pt", ".bin", ".pth", ".safetensors"])
@@ -99,6 +100,14 @@ os.makedirs(user_directory, exist_ok=True)
 
 filename_list_cache = {}
 
+<<<<<<< HEAD
+=======
+if not os.path.exists(input_directory):
+    try:
+        os.makedirs(input_directory)
+    except:
+        logging.error("Failed to create input directory")
+>>>>>>> upstream/master
 
 def set_output_directory(output_dir):
     global output_directory
@@ -207,11 +216,18 @@ def recursive_search(directory, excluded_dir_names=None):
     try:
         dirs[directory] = os.path.getmtime(directory)
     except FileNotFoundError:
+<<<<<<< HEAD
         print(f"Warning: Unable to access {directory}. Skipping this path.")
 
     for dirpath, subdirs, filenames in os.walk(
         directory, followlinks=True, topdown=True
     ):
+=======
+        logging.warning(f"Warning: Unable to access {directory}. Skipping this path.")
+
+    logging.debug("recursive file list on directory {}".format(directory))
+    for dirpath, subdirs, filenames in os.walk(directory, followlinks=True, topdown=True):
+>>>>>>> upstream/master
         subdirs[:] = [d for d in subdirs if d not in excluded_dir_names]
         for file_name in filenames:
             relative_path = os.path.relpath(os.path.join(dirpath, file_name), directory)
@@ -222,8 +238,9 @@ def recursive_search(directory, excluded_dir_names=None):
             try:
                 dirs[path] = os.path.getmtime(path)
             except FileNotFoundError:
-                print(f"Warning: Unable to access {path}. Skipping this path.")
+                logging.warning(f"Warning: Unable to access {path}. Skipping this path.")
                 continue
+    logging.debug("found {} files".format(len(result)))
     return result, dirs
 
 
@@ -319,6 +336,7 @@ def get_save_image_path(filename_prefix, output_dir, image_width=0, image_height
 
     full_output_folder = os.path.join(output_dir, subfolder)
 
+<<<<<<< HEAD
     if (
         os.path.commonpath((output_dir, os.path.abspath(full_output_folder)))
         != output_dir
@@ -333,6 +351,14 @@ def get_save_image_path(filename_prefix, output_dir, image_width=0, image_height
             + os.path.commonpath((output_dir, os.path.abspath(full_output_folder)))
         )
         print(err)
+=======
+    if os.path.commonpath((output_dir, os.path.abspath(full_output_folder))) != output_dir:
+        err = "**** ERROR: Saving image outside the output folder is not allowed." + \
+              "\n full_output_folder: " + os.path.abspath(full_output_folder) + \
+              "\n         output_dir: " + output_dir + \
+              "\n         commonpath: " + os.path.commonpath((output_dir, os.path.abspath(full_output_folder)))
+        logging.error(err)
+>>>>>>> upstream/master
         raise Exception(err)
 
     try:
